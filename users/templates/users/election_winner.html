@@ -1,0 +1,21 @@
+{% extends "users/base.html" %}
+{% block title %}Election Winners{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Election Winners</h1>
+
+    <div class="row">
+        {% for winner in election_winners %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ winner.winner_image_url }}" class="card-img-top" alt="{{ winner.winner_name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ winner.election_name }}</h5>
+                    <p class="card-text">Winner: {{ winner.winner_name }}</p>
+                    <p class="card-text">Votes: {{ winner.winner_votes }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

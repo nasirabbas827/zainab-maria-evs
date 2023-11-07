@@ -1,0 +1,24 @@
+{% extends "users/base.html" %}
+{% block title %} Candidates for {{ election.name }} {% endblock title %}
+{% block content %}
+    <h2>Candidates for {{ election.name }}</h2>
+    <div class="row">
+        {% for candidate in candidates %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="{{ candidate.image.url }}" class="card-img-top" alt="{{ candidate.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ candidate.name }}</h5>
+                        <p class="card-text">{{ candidate.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <form method="post" action="{% url 'vote' candidate.id %}">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" value="Vote">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

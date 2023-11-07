@@ -1,0 +1,61 @@
+{% extends "users/base.html" %}
+{% block title %} Home Page {% endblock title %}
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ user.first_name.title|default:'Guest' }}</h1>
+        <p class="lead">
+            We have integrated an innovative <b>online voting system</b> using blockchain technology.
+            This voting system ensures secure and transparent elections by leveraging the power of blockchain to record and verify votes.
+        </p>
+
+        <hr class="my-4">
+        <p class="lead">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Add information about your online voting system with blockchain -->
+    <div class="container">
+        <h2>Online Voting System with Blockchain</h2>
+        <p>
+            Our project is an innovative online voting system developed using Django and blockchain technology.
+            It ensures secure and transparent elections by leveraging the power of blockchain to record and verify votes.
+            Here are some key features:
+        </p>
+        <ul>
+            <li>Immutable and tamper-proof vote recording using blockchain</li>
+            <li>User-friendly interface for voters</li>
+            <li>Advanced security measures to prevent fraud</li>
+            <li>Real-time vote counting and result display</li>
+        </ul>
+    </div>
+
+    <!-- Display list of elections as Bootstrap cards -->
+    <div class="container">
+        <h2>Upcoming Elections</h2>
+        <div class="card-deck">
+            {% for election in elections %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ election.name }}</h5>
+                        <p class="card-text">
+                            <strong>Status:</strong> {{ election.status }}<br>
+                            <strong>Start Date:</strong> {{ election.start_date }}<br>
+                            <strong>End Date:</strong> {{ election.end_date }}<br>
+                            <strong>Description:</strong> {{ election.description }}<br>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <form method="get" action="{% url 'view_candidates' election.id %}">
+                            <button class="btn btn-primary" type="submit">View Candidates</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
